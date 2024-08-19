@@ -3,7 +3,7 @@ import React from 'react';
 function Product({ item, addtocart }) {
   return (
     <div className="bg-white shadow-md rounded-lg p-4 flex flex-col items-center">
-      <img src={item.img} alt={item.name} className="w-32 h-32 object-cover mb-4 rounded" />
+      <img src={item.img} alt={item.name} className="w-38 h-38 object-cover mb-4 rounded" />
       <h2 className="text-xl font-semibold mb-2">{item.name}</h2>
       <p className="text-lg text-gray-700 mb-2">${item.price}</p>
       <button 

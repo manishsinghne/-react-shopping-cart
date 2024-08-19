@@ -1,23 +1,31 @@
 import React, { useEffect, useState } from 'react';
-function Basket({ cartdata,setcart }) {
-  const [totalPrice,settotalprice]=useState(0)
 
-  useEffect(()=> {  const Price = cartdata.reduce((total, item) => total + item.price * item.qun, 0);
-settotalprice(Price)
-  },[cartdata])
+function Basket({ cartdata, setcart }) {
+  const [totalPrice, settotalprice] = useState(0);
 
-const increase=(index)=>{
-const incdata= cartdata.map((item,ind)=>{
-  return  index===ind ? {...item, qun: item.qun+1} : item
-})
-setcart(incdata)
-}
-const decrease=(index)=>{
-  const  decdata= cartdata.map((item,ind)=>{
-    return index===ind && item.qun>1 ?{...item,qun:item.qun-1}: item
-  })
-  setcart(decdata)
-}
+  useEffect(() => {
+    const Price = cartdata.reduce((total, item) => total + item.price * item.qun, 0);
+    settotalprice(Price);
+  }, [cartdata]);
+
+  const increase = (index) => {
+    const incdata = cartdata.map((item, ind) => {
+      return index === ind ? { ...item, qun: item.qun + 1 } : item;
+    });
+    setcart(incdata);
+  };
+
+  const decrease = (index) => {
+    const decdata = cartdata.map((item, ind) => {
+      return index === ind && item.qun > 1 ? { ...item, qun: item.qun - 1 } : item;
+    });
+    setcart(decdata);
+  };
+
+  const removeItem = (index) => {
+    const newData = cartdata.filter((_, ind) => ind !== index);
+    setcart(newData);
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -28,12 +36,17 @@ const decrease=(index)=>{
             <img src={item.img} alt={item.name} className="w-32 h-32 object-cover mb-4 rounded" />
             <h2 className="text-xl font-semibold mb-2">{item.name}</h2>
             <div className="flex items-center space-x-4 mb-2">
-              <button className="bg-blue-500 text-white rounded-full p-2" onClick={()=>increase(index)}>+</button>
+              <button className="bg-blue-500 text-white rounded-full p-2" onClick={() => increase(index)}>+</button>
               <span className="text-lg">{item.qun}</span>
-              <button className="bg-blue-500 text-white rounded-full p-2" onClick={()=>decrease(index)}>-</button>
-
+              <button className="bg-blue-500 text-white rounded-full p-2" onClick={() => decrease(index)}>-</button>
             </div>
             <h3 className="text-lg font-semibold text-gray-700">${item.price}</h3>
+            <button 
+              className="mt-4 bg-red-500 text-white rounded-full px-4 py-2"
+              onClick={() => removeItem(index)}
+            >
+              Remove
+            </button>
           </div>
         ))}
       </div>
